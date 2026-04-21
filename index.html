@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xtreme Burger | The Gold Standard of Mumbai Burgers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #ffcc00;
+            --deep-black: #050505;
+            --soft-gray: #1a1a1a;
+        }
+        body {
+            background-color: var(--deep-black);
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+        .font-bebas { font-family: 'Bebas Neue', cursive; }
+        
+        /* Hero Styling */
+        .hero-video-container {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), 
+                        url('https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Card Effects */
+        .premium-card {
+            background: linear-gradient(145deg, #121212, #080808);
+            border: 1px solid rgba(255, 204, 0, 0.05);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .premium-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+        }
+        .premium-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,204,0,0.05), transparent);
+            transition: 0.5s;
+        }
+        .premium-card:hover::before { left: 100%; }
+
+        .img-hover {
+            transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .premium-card:hover .img-hover {
+            transform: scale(1.15) rotate(2deg);
+        }
+
+        /* Floating Nav */
+        .nav-blur {
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Map styling */
+        .map-container {
+            filter: grayscale(1) invert(0.9) contrast(1.2);
+            opacity: 0.6;
+            transition: 0.5s;
+            border-radius: 30px;
+        }
+        .map-container:hover {
+            filter: grayscale(0) invert(0);
+            opacity: 1;
+        }
+
+        .gold-glow {
+            text-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <nav class="fixed w-full z-[100] nav-blur py-6 px-8 md:px-20 flex justify-between items-center">
+        <div class="text-3xl font-bebas tracking-[6px] text-white flex items-center gap-2">
+            XTREME <span class="text-yellow-400">BURGER</span>
+        </div>
+        <div class="hidden lg:flex gap-14 text-[10px] uppercase tracking-[4px] font-bold">
+            <a href="#home" class="hover:text-yellow-400 transition-all">Home</a>
+            <a href="#menu" class="hover:text-yellow-400 transition-all">Selection</a>
+            <a href="#location" class="hover:text-yellow-400 transition-all">Visit Us</a>
+        </div>
+        <div class="flex items-center gap-6">
+            <button onclick="sendWhatsAppOrder()" class="relative group bg-yellow-400 text-black px-8 py-3 rounded-full overflow-hidden font-extrabold text-[11px] uppercase tracking-widest shadow-[0_0_20px_rgba(255,204,0,0.3)] hover:shadow-yellow-400/50 transition-all">
+                <span class="relative z-10">Cart <span id="cartCount" class="ml-2 bg-black text-white px-2 py-0.5 rounded-full text-[9px]">0</span></span>
+                <div class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-video-container">
+        <div class="text-center z-10 px-6">
+            <div class="mb-8 opacity-0 animate-[fadeIn_1s_ease-out_forwards]">
+                <span class="inline-block h-[1px] w-12 bg-yellow-400 align-middle"></span>
+                <span class="text-yellow-400 font-bold tracking-[8px] uppercase text-[12px] mx-4">Est. Bhendi Bazaar</span>
+                <span class="inline-block h-[1px] w-12 bg-yellow-400 align-middle"></span>
+            </div>
+            <h1 class="text-7xl md:text-[11rem] font-bebas leading-[0.8] mb-12 gold-glow">
+                CRAFTING <br><span class="text-yellow-400">LEGENDS</span>
+            </h1>
+            <div class="flex flex-col md:flex-row justify-center gap-8">
+                <a href="#menu" class="bg-white text-black px-16 py-5 rounded-full font-bold text-[12px] uppercase tracking-[3px] hover:bg-yellow-400 transition-all duration-500 hover:scale-105">View Menu</a>
+                <button onclick="openChat()" class="glass border border-white/10 px-16 py-5 rounded-full font-bold text-[12px] uppercase tracking-[3px] hover:bg-white hover:text-black transition-all duration-500">Flavor Match AI</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Selection -->
+    <section id="menu" class="py-40 px-6 md:px-20 bg-[#080808]">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+                <div class="max-w-xl">
+                    <h2 class="text-5xl md:text-7xl font-bebas tracking-wider mb-6">THE <span class="text-yellow-400">SIGNATURE</span> COLLECTION</h2>
+                    <p class="text-gray-500 text-sm md:text-base uppercase tracking-[4px] leading-relaxed">Har bite mein ek kahani hai. Quality bina compromise ke.</p>
+                </div>
+                <div class="h-[1px] flex-1 bg-white/10 hidden md:block mx-10 mb-8"></div>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-32">
+                <!-- OG Classic -->
+                <div class="premium-card rounded-[40px]">
+                    <div class="h-[350px] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover img-hover">
+                    </div>
+                    <div class="p-10">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h4 class="text-2xl font-bold uppercase tracking-tighter mb-2">OG Classic</h4>
+                                <div class="flex gap-1">
+                                    <i class="fas fa-star text-[10px] text-yellow-400"></i>
+                                    <i class="fas fa-star text-[10px] text-yellow-400"></i>
+                                    <i class="fas fa-star text-[10px] text-yellow-400"></i>
+                                    <i class="fas fa-star text-[10px] text-yellow-400"></i>
+                                    <i class="fas fa-star text-[10px] text-yellow-400"></i>
+                                </div>
+                            </div>
+                            <span class="text-2xl font-bold text-yellow-400">₹220</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-10 leading-loose">Wahi classic swaad jo Mumbai ko deewana bana chuka hai. Freshly grilled patty aur hamara secret X-sauce.</p>
+                        <button onclick="addToCart('Xtreme OG Classic', 220)" class="w-full py-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-yellow-400 hover:text-black transition-all font-bold text-[11px] uppercase tracking-[3px]">Add To Order</button>
+                    </div>
+                </div>
+
+                <!-- Beast -->
+                <div class="premium-card rounded-[40px]">
+                    <div class="h-[350px] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover img-hover">
+                    </div>
+                    <div class="p-10">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h4 class="text-2xl font-bold uppercase tracking-tighter mb-2">The Beast</h4>
+                                <span class="bg-yellow-400 text-black text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Bestseller</span>
+                            </div>
+                            <span class="text-2xl font-bold text-yellow-400">₹380</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-10 leading-loose">Double the meat, double the emotion. Bhendi Bazaar ka sabse bhari burger sirf bhukkado ke liye.</p>
+                        <button onclick="addToCart('Bhendi Bazaar Beast', 380)" class="w-full py-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-yellow-400 hover:text-black transition-all font-bold text-[11px] uppercase tracking-[3px]">Add To Order</button>
+                    </div>
+                </div>
+
+                <!-- Zen Veg -->
+                <div class="premium-card rounded-[40px]">
+                    <div class="h-[350px] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?auto=format&fit=crop&w=800&q=80" alt="" class="w-full h-full object-cover img-hover">
+                    </div>
+                    <div class="p-10">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h4 class="text-2xl font-bold uppercase tracking-tighter mb-2 text-green-400">Crispy Zen</h4>
+                                <span class="text-[10px] text-gray-500 uppercase tracking-widest">Premium Vegetarian</span>
+                            </div>
+                            <span class="text-2xl font-bold text-yellow-400">₹260</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-10 leading-loose">Panko cottage cheese with a spicy purple slaw. Veg mein itna swaad pehle kabhi nahi dekha hoga.</p>
+                        <button onclick="addToCart('Crispy Zen (Veg)', 260)" class="w-full py-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-green-600 hover:text-white transition-all font-bold text-[11px] uppercase tracking-[3px]">Add To Order</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sides Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Wings -->
+                <div class="group bg-[#0a0a0a] p-6 rounded-[30px] border border-white/5 hover:border-yellow-400/30 transition-all">
+                    <div class="rounded-2xl overflow-hidden mb-6 h-48">
+                        <img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=600&q=80" alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <h5 class="font-bold text-sm uppercase tracking-widest mb-1">Ghost Pepper Wings</h5>
+                    <p class="text-yellow-400 font-bold text-xs mb-6">₹290</p>
+                    <button onclick="addToCart('Ghost Pepper Wings', 290)" class="w-full py-3 rounded-xl bg-white/5 text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all">Add</button>
+                </div>
+                <!-- Fries -->
+                <div class="group bg-[#0a0a0a] p-6 rounded-[30px] border border-white/5 hover:border-yellow-400/30 transition-all">
+                    <div class="rounded-2xl overflow-hidden mb-6 h-48">
+                        <img src="https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=600&q=80" alt="[Image of Golden Fries]" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <h5 class="font-bold text-sm uppercase tracking-widest mb-1">Xtreme Golden Fries</h5>
+                    <p class="text-yellow-400 font-bold text-xs mb-6">₹120</p>
+                    <button onclick="addToCart('Xtreme Fries', 120)" class="w-full py-3 rounded-xl bg-white/5 text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all">Add</button>
+                </div>
+                <!-- Shake -->
+                <div class="group bg-[#0a0a0a] p-6 rounded-[30px] border border-white/5 hover:border-yellow-400/30 transition-all">
+                    <div class="rounded-2xl overflow-hidden mb-6 h-48">
+                        <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80" alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <h5 class="font-bold text-sm uppercase tracking-widest mb-1">Oreo Overload</h5>
+                    <p class="text-yellow-400 font-bold text-xs mb-6">₹210</p>
+                    <button onclick="addToCart('Oreo Shake', 210)" class="w-full py-3 rounded-xl bg-white/5 text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all">Add</button>
+                </div>
+                <!-- Coffee -->
+                <div class="group bg-[#0a0a0a] p-6 rounded-[30px] border border-white/5 hover:border-yellow-400/30 transition-all">
+                    <div class="rounded-2xl overflow-hidden mb-6 h-48">
+                        <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80" alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <h5 class="font-bold text-sm uppercase tracking-widest mb-1">X-Cold Coffee</h5>
+                    <p class="text-yellow-400 font-bold text-xs mb-6">₹150</p>
+                    <button onclick="addToCart('Cold Coffee', 150)" class="w-full py-3 rounded-xl bg-white/5 text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all">Add</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map & Visit Section -->
+    <section id="location" class="py-40 px-6 md:px-20 bg-black">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl md:text-7xl font-bebas tracking-widest mb-6">LOCATE <span class="text-yellow-400">THE X</span></h2>
+                <p class="text-gray-500 uppercase tracking-[5px] text-xs font-bold">Come experience the atmosphere</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <!-- Stylish Google Map -->
+                <div class="h-[500px] w-full map-container overflow-hidden shadow-2xl">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3773.8471556064113!2d72.82885977596282!3d18.938171056291603!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7cf902095f9c5%3A0xc3f58a8a86a60e0d!2sBhendi%20Bazaar%2C%20Mumbai!5e0!3m2!1sen!2sin!4v1714567890123!5m2!1sen!2sin" 
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                
+                <div class="space-y-12">
+                    <div>
+                        <h4 class="text-yellow-400 font-bold uppercase tracking-[4px] text-sm mb-4">The Mothership</h4>
+                        <p class="text-3xl font-bold leading-tight">G-42, Sector 6, Al Ezz Tower, Bhendi Bazaar, Mumbai 400003</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-gray-500 font-bold uppercase tracking-[4px] text-[10px] mb-4">Working Hours</h4>
+                            <p class="text-sm font-semibold">DAILY: 12 PM - 3 AM</p>
+                            <p class="text-xs text-gray-500 mt-2">Late night cravings covered.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-gray-500 font-bold uppercase tracking-[4px] text-[10px] mb-4">Direct Contact</h4>
+                            <p class="text-sm font-semibold">+91 79778 52007</p>
+                            <p class="text-xs text-gray-500 mt-2">Personal assistance.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-10">
+                        <a href="https://wa.me/917977852007" target="_blank" class="text-yellow-400 hover:text-white transition-colors flex items-center gap-3 group">
+                            <i class="fab fa-whatsapp text-2xl group-hover:scale-110 transition-transform"></i>
+                            <span class="font-bold text-[10px] uppercase tracking-widest">Chat on WhatsApp</span>
+                        </a>
+                        <a href="https://www.instagram.com/xtremeburger3?igsh=cjdsM3h1Mzdocml5" target="_blank" class="text-yellow-400 hover:text-white transition-colors flex items-center gap-3 group">
+                            <i class="fab fa-instagram text-2xl group-hover:scale-110 transition-transform"></i>
+                            <span class="font-bold text-[10px] uppercase tracking-widest">Follow @xtremeburger3</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#050505] py-20 px-6 md:px-20 border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
+            <div class="text-center md:text-left">
+                <div class="text-3xl font-bebas tracking-[8px] text-white mb-4">XTREME <span class="text-yellow-400">BURGER</span></div>
+                <p class="text-[9px] uppercase tracking-[4px] text-gray-600">The Ultimate Burger Experience In Mumbai.</p>
+            </div>
+            
+            <div class="flex flex-col items-center gap-6">
+                <span class="text-[9px] uppercase tracking-[3px] text-gray-700 font-bold">Connect With Us</span>
+                <div class="flex gap-8">
+                    <!-- WhatsApp Footer Link -->
+                    <a href="https://wa.me/917977852007" target="_blank" class="w-12 h-12 rounded-full border border-white/5 flex items-center justify-center hover:bg-green-600 hover:text-white transition-all duration-300">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                    </a>
+                    <!-- Instagram Footer Link -->
+                    <a href="https://www.instagram.com/xtremeburger3?igsh=cjdsM3h1Mzdocml5" target="_blank" class="w-12 h-12 rounded-full border border-white/5 flex items-center justify-c
